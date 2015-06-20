@@ -4,7 +4,7 @@ ruby_dl_method:        "repo"
 ruby_repo:             "https://github.com/ruby/ruby.git"
 ruby_tarball_sha256:   "{{ruby_tarball_sha256_checksums[ruby_revision]}}"
 ruby_tarball_url:      "https://github.com/ruby/ruby/archive/{{ruby_revision}}.tar.gz"
-ruby_location:         "/usr/local/"
+ruby_location:         "/usr/local/ruby"
 
 
 rails_env: "production"
