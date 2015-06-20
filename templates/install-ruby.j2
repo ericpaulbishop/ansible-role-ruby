@@ -1,0 +1,9 @@
+#!/bin/bash
+
+cd /usr/local/src/
+if [ -e '{{ruby_revision}}.tar.gz' ] ; then tar xzf "{{ruby_revision}}.tar.gz" ; cd '{{ruby_revision}}' ; fi
+if [ -d 'ruby-repo' ] ; then cd 'ruby-repo' ; fi
+if [ ! -e ./configure ] ; then autoconf ; fi
+./configure --prefix='{{ ruby_location }}' --disable-install-doc
+make --jobs {{ cores.stdout }}
+make install

@@ -1,0 +1,14 @@
+---
+ruby_revision:         "v2_2_2"
+ruby_dl_method:        "repo"
+ruby_repo:             "https://github.com/ruby/ruby.git"
+ruby_tarball_sha256:   "{{ruby_tarball_sha256_checksums[ruby_revision]}}"
+ruby_tarball_url:      "https://github.com/ruby/ruby/archive/{{ruby_revision}}.tar.gz"
+ruby_location:         "/usr/local/"
+
+
+rails_env: "production"
+ruby_bundler_flags: ""
+ruby_free_min: ""
+ruby_gc_malloc_limit: ""
+ruby_heap_min_slots: ""
