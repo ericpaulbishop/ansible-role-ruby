@@ -92,8 +92,10 @@
             creates={{ ruby_location }}/bin/bundle"
 
 - name: Make Ruby symlinks
-  file: path=/usr/local/bin/{{ item }}
-        src={{ ruby_location }}/bin/{{ item }}
-        state=link
+  file: 
+    path:  "/usr/local/bin/{{ item }}"
+    src:   "{{ ruby_location }}/bin/{{ item }}"
+    state: link
+    force: yes
   with_items: ruby_symlinks
   when: ruby_location != "/usr/local" and ruby_location != "/usr/local/"

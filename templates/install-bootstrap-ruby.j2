@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd /usr/local/src/
-if [ -e 'ruby-{{ruby_revision}}.tar.gz' ]  ; then 
+if [ -e 'bootstrap_ruby.tar.gz' ]  ; then 
 	directory=$(tar xvzf "bootstrap_ruby.tar.gz" 2>&1 | sed 's/\/.*$//g' | sort | uniq | head -n1)  ; 
 	mv "$directory" bootstrap_ruby
 	cd bootstrap_ruby
