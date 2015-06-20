@@ -1,9 +1,19 @@
 #!/bin/bash
 
 cd /usr/local/src/
-if [ -e '{{ruby_revision}}.tar.gz' ] ; then tar xzf "{{ruby_revision}}.tar.gz" ; cd '{{ruby_revision}}' ; fi
-if [ -d 'ruby-repo' ] ; then cd 'ruby-repo' ; fi
+if [ -e 'ruby-{{ruby_revision}}.tar.gz' ] && [ '{{ruby_dl_method}}' = 'tarball' ] ; then 
+	directory=$(tar xvzf "ruby-{{ruby_revision}}.tar.gz" 2>&1 | sed 's/\/.*$//g' | sort | uniq | head -n1)  ; 
+	cd "$directory" 
+	echo "$directory" >/tmp/directory
+fi
+if [ -d 'ruby-repo' ] && [ '{{ruby_dl_method}}' = 'repo' ] ; then cd 'ruby-repo' ; fi
+if [ ! -e 'tool/config.sub' ] ; then
+	curl 'http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD' >'tool/config.sub'
+fi
+if [ ! -e 'tool/config.guess' ] ; then
+	curl 'http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD' > 'tool/config.guess'
+fi
 if [ ! -e ./configure ] ; then autoconf ; fi
-./configure --prefix='{{ ruby_location }}' --disable-install-doc
+./configure --prefix='{{ ruby_location }}' --with-baseruby='/usr/local/lib/bootstrap_ruby/bin/ruby' --disable-install-doc
 make --jobs {{ cores.stdout }}
 make install

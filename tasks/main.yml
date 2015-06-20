@@ -32,10 +32,30 @@
   with_items: ruby_yum_dependencies
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'Amazon'
 
+
+- name: Download bootstrap ruby source tarball
+  get_url:
+    url:  "https://github.com/ruby/ruby/archive/v1_8_7_374.tar.gz"
+    dest: "/usr/local/src/bootstrap_ruby.tar.gz"
+    sha256sum: "e4f5a855288714653384d9e5083fb542d4c8a99757937aa8879291aac534037a"
+
+- name: Generate the Ruby bootstrap installation script
+  template: src=install-bootstrap-ruby.j2
+            dest=/usr/local/src/install-bootstrap-ruby.sh
+            owner=root
+            group=root
+            mode=700
+
+- name: Run the Ruby bootstrap installation script
+  command: /usr/local/src/install-bootstrap-ruby.sh
+           creates=/usr/local/lib/bootstrap_ruby/bin/ruby
+
+
 - name: Download the Ruby source tarball
-  get_url: url={{ ruby_tarball_url }}
-           dest=/usr/local/src/
-           sha256sum={{ ruby_tarball_sha256 }}
+  get_url:
+    url:       "{{ ruby_tarball_url }}"
+    dest:      "/usr/local/src/ruby-{{ruby_revision}}.tar.gz"
+    sha256sum: "{{ ruby_tarball_sha256 }}"
   when: ruby_dl_method == "tarball"
 
 - name: Clone the Ruby source repo
@@ -76,3 +96,4 @@
         src={{ ruby_location }}/bin/{{ item }}
         state=link
   with_items: ruby_symlinks
+  when: ruby_location != "/usr/local" and ruby_location != "/usr/local/"

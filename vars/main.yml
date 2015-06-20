@@ -1,5 +1,9 @@
 ---
 ruby_apt_dependencies:
+  - git
+  - curl
+  - autotools-dev
+  - libtool
   - libreadline-dev
   - libssl-dev
   - libyaml-dev

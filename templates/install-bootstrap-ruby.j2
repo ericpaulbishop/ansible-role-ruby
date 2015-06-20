@@ -1,0 +1,18 @@
+#!/bin/bash
+
+cd /usr/local/src/
+if [ -e 'ruby-{{ruby_revision}}.tar.gz' ]  ; then 
+	directory=$(tar xvzf "bootstrap_ruby.tar.gz" 2>&1 | sed 's/\/.*$//g' | sort | uniq | head -n1)  ; 
+	mv "$directory" bootstrap_ruby
+	cd bootstrap_ruby
+fi
+if [ ! -e 'tool/config.sub' ] ; then
+	curl 'http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD' >'tool/config.sub'
+fi
+if [ ! -e 'tool/config.guess' ] ; then
+	curl 'http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD' > 'tool/config.guess'
+fi
+if [ ! -e ./configure ] ; then autoconf ; fi
+./configure --prefix='/usr/local/lib/bootstrap_ruby' --exec-prefix='/usr/local/lib/bootstrap_ruby' --disable-install-doc
+make --jobs {{ cores.stdout }}
+make install
