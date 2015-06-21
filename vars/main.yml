@@ -1,5 +1,7 @@
 ---
 ruby_apt_dependencies:
+  - autoconf
+  - build-essential
   - git
   - curl
   - autotools-dev
