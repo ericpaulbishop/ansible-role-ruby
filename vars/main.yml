@@ -2,6 +2,8 @@
 ruby_apt_dependencies:
   - autoconf
   - build-essential
+  - bison
+  - byacc
   - git
   - curl
   - autotools-dev
