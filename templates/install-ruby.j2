@@ -14,6 +14,6 @@ if [ ! -e 'tool/config.guess' ] ; then
 	curl 'http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD' > 'tool/config.guess'
 fi
 if [ ! -e ./configure ] ; then autoconf ; fi
-./configure --prefix='{{ ruby_location }}' --with-baseruby='/usr/local/lib/bootstrap_ruby/bin/ruby' --disable-install-doc
+./configure --prefix='{{ ruby_location }}' --with-baseruby='/usr/local/lib/bootstrap_ruby/bin/ruby' --with-openssl-dir=/usr/lib/ssl --disable-install-doc
 make --jobs {{ cores.stdout }}
 make install
