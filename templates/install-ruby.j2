@@ -14,6 +14,9 @@ if [ ! -e 'tool/config.guess' ] ; then
 	curl 'http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD' > 'tool/config.guess'
 fi
 if [ ! -e ./configure ] ; then autoconf ; fi
-./configure --prefix='{{ ruby_location }}' --with-baseruby='/usr/local/lib/bootstrap_ruby/bin/ruby' --with-openssl-dir=/usr/lib/ssl --disable-install-doc
+
+curl -fsSL https://gist.github.com/mislav/055441129184a1512bb5.txt > ssl3.patch
+patch -p1 < ssl3.patch || echo "no need to patch"
+./configure --prefix='{{ ruby_location }}' --with-baseruby='/usr/local/lib/bootstrap_ruby_two/bin/ruby' --disable-install-doc
 make --jobs {{ cores.stdout }}
 make install

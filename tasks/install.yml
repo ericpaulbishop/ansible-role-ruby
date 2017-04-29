@@ -34,6 +34,7 @@
     dest: "/usr/local/src/bootstrap_ruby.tar.gz"
     sha256sum: "e4f5a855288714653384d9e5083fb542d4c8a99757937aa8879291aac534037a"
 
+
 - name: Generate the Ruby bootstrap installation script
   template: 
     src:   "install-bootstrap-ruby.j2"
@@ -47,6 +48,28 @@
   command: "/usr/local/src/install-bootstrap-ruby.sh"
   args:
     creates: "/usr/local/lib/bootstrap_ruby/bin/ruby"
+
+
+
+- name: Download bootstrap ruby two source tarball
+  get_url:
+    url:  "https://github.com/ruby/ruby/archive/v2_2_2.tar.gz"
+    dest: "/usr/local/src/bootstrap_ruby_two.tar.gz"
+    sha256sum: "f206ba104fd8ec8ccec21154c8a3deb186da06332166562121e667d6385e9850"
+
+- name: Generate the Ruby bootstrap two installation script
+  template: 
+    src:   "install-bootstrap-ruby-two.j2"
+    dest:  "/usr/local/src/install-bootstrap-ruby-two.sh"
+    owner: "root"
+    group: "root"
+    mode:  "700"
+
+
+- name: Run the Ruby bootstrap two installation script
+  command: "/usr/local/src/install-bootstrap-ruby-two.sh"
+  args:
+    creates: "/usr/local/lib/bootstrap_ruby_two/bin/ruby"
 
 
 - name: Download the Ruby source tarball
