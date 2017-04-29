@@ -1,5 +1,5 @@
 ---
-ruby_revision:         "v2_2_2"
+ruby_revision:         "v2_4_1"
 ruby_dl_method:        "repo"
 ruby_repo:             "https://github.com/ruby/ruby.git"
 ruby_tarball_sha256:   "{{ruby_tarball_sha256_checksums[ruby_revision]}}"
